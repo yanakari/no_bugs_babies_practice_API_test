@@ -5,6 +5,7 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import org.apache.http.HttpStatus;
 import org.example.api.StudentRequests;
+import org.example.api.models.Student;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,11 @@ public class SimpleTest {
     public void userShouldBeAbleToCreateStudent() {
 
         //given-when-then BDD
-       StudentRequests.createStudent("{\n" + "\"name\": \"Саша Осипов\", \n" + "\"grade\": 2\n" + "}");
+
+        //серилизация из json в объект и наоборот
+        Student student = new Student("Саша Осипов", 2 );
+
+       StudentRequests.createStudent(student.toJson());
     }
 
     @Test
@@ -32,7 +37,8 @@ public class SimpleTest {
         //2.Тест сам себе готовит данные
 
         //Шаг 1: Создание студента
-        String id = StudentRequests.createStudent("{\n" + "\"name\": \"Саша Осипов\", \n" + "\"grade\": 2\n" + "}");
+        Student student = new Student("Саша Осипов", 2 );
+        String id = StudentRequests.createStudent(student.toJson());
 
         //Шаг 2: Удаление студента
 
