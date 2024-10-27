@@ -25,9 +25,9 @@ public class SimpleTest {
         //given-when-then BDD
 
         //серилизация из json в объект и наоборот
-        Student student = new Student("Саша Осипов", 2 );
+        Student student = Student.builder().name("Саша Осипов").grade(2).build();
 
-       StudentRequests.createStudent(student.toJson());
+        StudentRequests.createStudent(student);
     }
 
     @Test
@@ -37,16 +37,16 @@ public class SimpleTest {
         //2.Тест сам себе готовит данные
 
         //Шаг 1: Создание студента
-        Student student = new Student("Саша Осипов", 2 );
-        String id = StudentRequests.createStudent(student.toJson());
+        Student student = Student.builder().name("Саша Осипов").grade(2).build();
+        Student createdStudent = StudentRequests.createStudent(student);
 
         //Шаг 2: Удаление студента
 
-        StudentRequests.deleteStudent(id);
+        StudentRequests.deleteStudent(createdStudent.getId());
 
         //Шаг 3: Проверить, что студент больше не существует
         given()
-                .get("/student/" +id)
+                .get("/student/" + createdStudent.getId())
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_NOT_FOUND);
