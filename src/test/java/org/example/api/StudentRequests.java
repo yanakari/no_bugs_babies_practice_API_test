@@ -22,7 +22,7 @@ public class StudentRequests {
             .body(studentJson)
             .contentType(ContentType.JSON)
             .when()
-            .post("https://crudcrud.com/api/80a1a72808fd4adbb27d100d13a5c3be/student")
+            .post("https://crudcrud.com/api/31ed61ebe0514fc2acc01e65f6d3efff/student")
             .then()
             .assertThat()
             .statusCode(201)
