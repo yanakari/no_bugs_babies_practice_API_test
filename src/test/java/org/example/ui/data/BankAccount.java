@@ -11,11 +11,10 @@ public class BankAccount {
     private String address;
     private String city;
     private String state;
-    private int zipCode;
-    private int phone;
-    private int ssn;
+    private String zipCode;
+    private String phone;
+    private String ssn;
     private String username;
     private String password;
     private String repeatedPassword;
-
 }

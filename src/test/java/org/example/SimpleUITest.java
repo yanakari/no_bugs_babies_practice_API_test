@@ -45,6 +45,8 @@ public class SimpleUITest {
 
         registerAccountPage.getZipCodeError().shouldHave(Condition.exactText("Zip Code is required."));
 
+        registerAccountPage.getPhone().shouldHave(Condition.exactText(""));
+
         registerAccountPage.getSsnError().shouldHave(Condition.exactText("Social Security Number is required."));
 
         registerAccountPage.getUsernameError().shouldHave(Condition.exactText("Username is required."));
@@ -56,6 +58,35 @@ public class SimpleUITest {
 
     @Test
     public void userCanCreateAccount() {
+            // Подготовка страницы
+            RegisterAccountPage registerAccountPage = new RegisterAccountPage();
+            registerAccountPage.open();
 
-    }
+            // Подготовка данных
+            String password = RandomData.randomString();
+            String username = RandomData.randomString();
+
+            BankAccount bankAccount = BankAccount.builder()
+                    .firstName(RandomData.randomString())
+                    .lastName(RandomData.randomString())
+                    .address(RandomData.randomString())
+                    .city(RandomData.randomString())
+                    .state(RandomData.randomString())
+                    .zipCode(RandomData.randomString())
+                    .phone(RandomData.randomString())
+                    .ssn(RandomData.randomString())
+                    .username(username)
+                    .password(password)
+                    .repeatedPassword(password)
+                    .build();
+
+            // Шаги теста
+            registerAccountPage.register(bankAccount);
+
+            // Проверка ожидаемого результата
+            registerAccountPage.getSuccessfulMessageTitle().shouldHave(Condition.exactText("Welcome " + username));
+
+            registerAccountPage.getSuccessfulMessageText().shouldHave(Condition
+                    .exactText("Your account was created successfully. You are now logged in."));
+        }
 }
