@@ -3,6 +3,7 @@ package org.example;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
+import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 import org.example.api.StudentRequests;
 import org.example.api.models.Student;
@@ -16,6 +17,9 @@ public class SimpleTest {
     public static void setupTests() {
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
         RestAssured.baseURI = "https://crudcrud.com/api/31ed61ebe0514fc2acc01e65f6d3efff";
+
+        //В спецификацию мы добавляем то, что хотим по умолчанию передавать в каждом запросе
+        //RestAssured.requestSpecification = new RequestSpecification().contentType().
 
         //Принцип программирования DRY=DO NOT REPEAT YOURSELF
     }
@@ -52,4 +56,9 @@ public class SimpleTest {
                 .statusCode(HttpStatus.SC_NOT_FOUND);
 
     }
+
+    //Покрытие эндпойнтов
+    //1.Позитивный сценарий
+    //2.Покрытие  всех статус кодов (из API документации или Swagger)
+    //3.Покрытие все граничные значения и классы эквивалентности параметров запроса
 }

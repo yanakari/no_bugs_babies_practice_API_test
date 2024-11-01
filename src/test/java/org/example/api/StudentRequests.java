@@ -20,7 +20,7 @@ public class StudentRequests {
 
         return given()
             .body(studentJson)
-            .contentType(ContentType.JSON)
+            .contentType(ContentType.JSON) //Если добавлена спецификация RestAssured.RequestSpec, то можно использовать параметр .spec() вместо contentType
             .when()
             .post("https://crudcrud.com/api/31ed61ebe0514fc2acc01e65f6d3efff/student")
             .then()
